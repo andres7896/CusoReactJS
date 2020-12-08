@@ -1,0 +1,305 @@
+/*------- PRIMERA PARTE ------------*/
+
+import React, { Component } from 'react';
+//import logo from './logo.png';
+import './App.css';
+
+//function Hello(props) {
+//  return <h1>{ props.title }</h1>
+//}
+
+//const Hello = (props) => <h1>{ props.title }</h1>
+
+/*class Hello extends Component{
+  render(){
+  return <h1>{ this.props.title }</h1>
+  }
+}
+
+class Texto extends Component{
+  render(){
+  const { 
+    arrayOfNumbers, 
+    boolean, 
+    objectWithInfo, 
+    multply, 
+    number, 
+    text,
+    title
+  } = this.props;
+
+  //const textoSegunBool = boolean ? 'Cierto' : 'Falso'
+  const mappedNumbers = arrayOfNumbers.map(multply)
+
+  return (
+    <div>
+      {title}
+      <p>{ mappedNumbers.join(', ') }</p>
+      <p>{ objectWithInfo.key2 }</p>
+    </div>
+  )
+  }
+}*/
+
+/*class Title extends Component{
+  render(){
+    return (
+      <div>
+        <h1>{ this.props.text }</h1>
+        <p>{ this.props.number }</p>
+      </div>
+    )
+  }
+}
+
+Title.defaultProps = {
+  text: 'Esta es una propiedad estatica',
+  number: 89
+}*/
+
+/*class Contador extends Component{
+  state = { contador: 0 };
+  
+  render(){
+    return <span>{ this.state.contador }</span>
+  }
+}*/
+
+class Contador extends Component{
+  constructor (props){
+    super(props)
+    this.state = { contador: this.props.contadorInicial }
+    setInterval(() => {
+      this.setState({ contador: this.state.contador + 1 })
+    }, 1000)
+  }
+
+  render(){
+    console.log('ContadorNumero render()')
+    return <ContadorNumero numero={this.state.contador}/>
+  }
+}
+
+Contador.defaultProps = {
+  contadorInicial: 0
+}
+
+class ContadorNumero extends Component{
+  render(){
+  return <span>{ this.props.numero }</span>
+  }
+}
+
+function App() {
+  return (
+    <div className="App">
+      {/*<h2>Primer componente con State</h2>
+      <Contador contadorInicial={60}/>
+      <Title />
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <Hello title='Hola App en ReactJS'/>
+        <Texto
+          arrayOfNumbers={[30, 40, 50 ,900, 6]}
+          boolean={true} 
+          objectWithInfo={{ key: 'Hola', key2: 78 }}
+          multply={(number) => number * 4}
+          number={5} 
+          text='Texto en String'
+          title={<h1>Hola Render!!!</h1>} 
+        />
+  </header>*/}
+    </div>
+  );
+}
+
+export default App;
+
+/*------- SEGUNDA PARTE ------------*/
+
+// Uso de ternarias
+
+function useConditionalRendering (mostrarA) {
+    if (mostrarA) {
+        return <ComponenteA />
+    }
+    return <ComponenteB />
+}
+
+constructor(){
+        super()
+        this.state = { mostrarA: true }
+}
+
+{ useConditionalRendering(mostrarA) }
+
+{ this.state.mostrarA ? <ComponenteA /> : <ComponenteB /> } // Uso más recomendado
+
+
+///-----
+import React, { Component } from 'react';
+
+class LoginButton extends Component{
+    render(){
+        return <button> Iniciar Sesión </button>
+    }
+}
+
+class LogoutButton extends Component{
+    render(){
+        return (
+            <div>
+                <p>Bienvenido, Usuario!</p>
+                <button> Cerrar Sesión </button>
+            </div>
+        ) 
+    }
+}
+
+
+export default class ConditionalSection extends Component{
+    constructor(){
+        super()
+        this.state = { isUserLogged: false }
+    }
+    render(){
+        return (
+            <div>
+                <h4>Conditional Rendering</h4>
+                { this.state.isUserLogged 
+                    ? <LogoutButton /> 
+                    : <LoginButton /> }
+            </div>
+        )
+    }
+}
+
+//-----------
+
+import cars from './data/cars.json'
+
+class CarItem extends Component{
+  render () {
+    const { car } = this.props
+    return(
+      <li>
+        <p><strong>Nombre: </strong> {car.name} </p>
+        <p><strong>Marca: </strong> {car.company} </p>
+      </li>
+    )
+  }
+}
+
+<h4> Trabajando con Objetos </h4>
+      <ul>
+        {
+          cars.map(car => {
+            return <CarItem key={car.id} car={car}/>
+          })
+        }
+      </ul>
+
+/*-----------TECERA PARTE --------------*/
+
+import React, { Component } from 'react';
+import './App.css'
+class Box extends Component{
+  render () {
+    return (
+      <div style={{ border: '1px solid #09f', margin: 5, padding: 5 }}>
+        { this.props.children }
+      </div>
+    )
+  }
+}
+
+class Articule extends Component{
+  render () {
+    return (
+      <section>
+        <h2>{ this.props.title }</h2>
+        <p><em>Escrito por { this.props.author }</em></p>
+        <Box>{ this.props.date }</Box>
+        <article>
+          { this.props.children }
+        </article>
+      </section>
+    )
+  }
+}
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <h4>children Props</h4>
+        <Articule
+          author='Andrés'
+          date={ new Date().toLocaleDateString() }
+          title='Articulo sobre la prop children' 
+        >
+          <p>El contenido que envolvemos dentro del componente Articule será enviado al componente como this.props.children</p>
+          <strong>Y mantener las etiquetas y componentes que se hayan añadido dentro.</strong>
+        </Articule>
+      </div>
+    );
+  }
+}
+
+export default App;
+
+/------------ Children y PropTypes -------/
+
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import './App.css';
+class Box extends Component{
+  render () {
+    return (
+      <div style={{ border: '1px solid #09f', margin: 5, padding: 5 }}>
+        { this.props.children }
+      </div>
+    )
+  }
+}
+
+class Articule extends Component{
+
+  static propTypes = {
+    author: PropTypes.string.isRequired
+  }
+
+  render () {
+
+    const { title, author, date, children } = this.props
+
+    return (
+      <section>
+        <h2>{ title }</h2>
+        { author && <p><em>Escrito por { author }</em></p> }
+        <Box>{ date }</Box>
+        <article>
+          { children }
+        </article>
+      </section>
+    )
+  }
+}
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <h4>PropTypes</h4>
+        <Articule
+          
+          date={ new Date().toLocaleDateString() }
+          title='Articulo sobre la prop children' 
+        >
+          <p>El contenido que envolvemos dentro del componente Articule será enviado al componente como this.props.children</p>
+          <strong>Y mantener las etiquetas y componentes que se hayan añadido dentro.</strong>
+        </Articule>
+      </div>
+    );
+  }
+}
+
+export default App;
