@@ -24,7 +24,8 @@ export class FetchExample extends Component {
                                 <span> { currency }</span>
                             </div>
                         )
-                     })
+                        }
+                     )
     }
     
     render() {
